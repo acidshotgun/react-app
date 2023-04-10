@@ -13,12 +13,32 @@ import EmployeesListItem from '../employees-list-item/employees-list-item.js';
 
 import './employees-list.css';
 
-const EmployeesList = () => {
+// Применение компонентов с заданными св-ми
+// Мы передали сюда массив Бд data из app.js и можем тут с ним работать
+
+// Нужно перебрать этот массив и вернуть новый массив с
+// Логика:
+//      1) В компонент приходит массив с оъектами data из app.js
+//      2) Тк в пропсах все является объектами мы применяем деструктуризацию
+//      3) {data} - деструктуризация. Мы получаем массив data из объекта и с ним работаем
+const EmployeesList = ({data}) => {
+
+    // Создаем переменную и внее будет помещен новый массив от data.map()
+    // Массив содержит компонент EmployeesListItem с данными от перебираемого объекта (item) который лежит в массиве ()
+    const elements = data.map(item => {
+        return (
+            // <EmployeesListItem name={item.name} salary={item.salary} increase={item.increase}/>
+            // Можно использовать оператор spread (...) и эта запись будет аналогична
+            // Так можно не указывать новые свойства которые могут появится
+            <EmployeesListItem {...item}/>
+        );
+    })
+
+    // Возвращаем elements (это новый массив) он содержить компоненты готовые
+    // Эти компоненты развернутся и сформируют вёрстку
     return (
         <ul className="app-list list-group">
-            <EmployeesListItem/>
-            <EmployeesListItem/>
-            <EmployeesListItem/>
+            {elements}
         </ul>
     );
 }

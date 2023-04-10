@@ -11,6 +11,16 @@ import './app.css';
 
 
 function App() {
+
+    // Иммитация базы данных
+    // Она будет передана в кач-ве свойства в <EmployeesList/>
+    const data = [
+        {name: 'Alisa J.', salary: 800, increase: false},
+        {name: 'Tom W.', salary: 800, increase: true},
+        {name: 'Mike W.', salary: 3000, increase: false},
+        {name: 'Aleksandr Z.', salary: 5000, increase: true},
+    ];
+
     return (
         <div className="app">
             <AppInfo/>
@@ -22,7 +32,10 @@ function App() {
                 <AppFilter />
             </div>
 
-            <EmployeesList />
+            {/* В компоненты можно передавать что угодно поэтому передадим массив БД */}
+            {/* Теперь массив БД data можно использовать внутри компонента EmployeesList */}
+            {/* ВАЖНО ЧТО ЭТОТ МАССИВ СТАНЕТ ОБЪЕКТОМ и нужна будет деструктуризация */}
+            <EmployeesList data={data}/>
             <EmployessAddForm />
         </div>
     );

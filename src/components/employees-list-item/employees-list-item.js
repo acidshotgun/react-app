@@ -3,11 +3,25 @@
 
 import './employees-list-item.css';
 
-const EmployeesListItem = () => {
+// Указать пропс (деструктуризация)
+// Пропс идет из app.js
+
+const EmployeesListItem = ({name, salary, increase}) => {
+    // Структура будет формироваться исходя из переданных из БД свойств
+    // Имя ЗП и премия
+    // Чтобы указать премию мы проверяем ее статус в БД true/false
+    // Если true, то к верстке присоеденим ' increase'
+    // Сам класс верстки формируется из переменной classNames
+    let classNames = 'list-group-item d-flex justify-content-between';
+
+    if (increase) {
+        classNames += ' increase';
+    }
+
     return (
-        <li className="list-group-item d-flex justify-content-between">
-            <span className="list-group-item-label">John Smith</span>
-            <input type="text" className="list-group-item-input" defaultValue="1000$"/>
+        <li className={classNames}>
+            <span className="list-group-item-label">{name}</span>
+            <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                     className="btn-cookie btn-sm ">
