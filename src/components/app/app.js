@@ -15,10 +15,10 @@ function App() {
     // Иммитация базы данных
     // Она будет передана в кач-ве свойства в <EmployeesList/>
     const data = [
-        {name: 'Alisa J.', salary: 800, increase: false},
-        {name: 'Tom W.', salary: 800, increase: true},
-        {name: 'Mike W.', salary: 3000, increase: false},
-        {name: 'Aleksandr Z.', salary: 5000, increase: true},
+        {name: 'Alisa J.', salary: 800, increase: false, id: 1},
+        {name: 'Tom W.', salary: 800, increase: true, id: 2,},
+        {name: 'Mike W.', salary: 3000, increase: false, id: 3},
+        {name: 'Aleksandr Z.', salary: 5000, increase: true, id: 4},
     ];
 
     return (
