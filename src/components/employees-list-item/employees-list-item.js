@@ -7,6 +7,7 @@ import './employees-list-item.css';
 // Пропс идет из app.js
 
 // Для работы с состоянием переделаем наш компонент в классовый
+// props - это объект с переданными в этот компонент св-ми ниже по иерархии
 class EmployeesListItem extends Component {
     constructor(props) {
         super(props);
@@ -34,8 +35,9 @@ class EmployeesListItem extends Component {
     }
 
     render() {
-        // Достаем из пропсов переменные
-        const { name, salary } = this.props;
+        // Достаем из переданных пропсов переменные
+        // в т.ч. ф-ю удаления
+        const { name, salary, onDelete } = this.props;
         // increase теперь мы получаем не из пропса а из состояния (там находится то что динамически меняется как раз)
         // Так же и like
         const { increase, like } = this.state;
@@ -71,7 +73,7 @@ class EmployeesListItem extends Component {
                         <i className="fas fa-cookie"></i>
                     </button>
 
-                    <button type="button"
+                    <button onClick={onDelete} type="button"
                             className="btn-trash btn-sm ">
                         <i className="fas fa-trash"></i>
                     </button>
