@@ -19,12 +19,13 @@ class App extends Component {
             // Иммитация базы данных
             // Она будет передана в кач-ве свойства в <EmployeesList/>
             data: [
-                {name: 'Alisa J.', salary: 800, increase: false, id: 1},
-                {name: 'Tom W.', salary: 800, increase: true, id: 2,},
-                {name: 'Mike W.', salary: 3000, increase: false, id: 3},
-                {name: 'Aleksandr Z.', salary: 5000, increase: true, id: 4},
+                {name: 'Alisa J', salary: 800, increase: false, id: 1},
+                {name: 'Tom W', salary: 800, increase: true, id: 2,},
+                {name: 'Mike W', salary: 3000, increase: false, id: 3},
+                {name: 'Aleksandr Z', salary: 5000, increase: true, id: 4},
             ]
         }
+        this.maxId = 4;
     }
     
     // Метод удаления items из list он будет передаваться до самых items
@@ -40,6 +41,18 @@ class App extends Component {
         this.setState(({data}) => {
             return {
                 data: data.filter(item => item.id !== id)
+            }
+        })
+    }
+
+    // Домашка
+    // Ф-я вызывается в формах и в кач-ве аргументов берет данные которые записан ф-й onValueChange при событии onChange
+    // Ф-я будет вызыватся в формах ф-й submitValues()
+    addItem = (newName, newSalary) => {
+        this.maxId++;
+        this.setState(({data}) => {
+            return {
+                data: [...data, {name: newName, salary: newSalary, increase: false, id: this.maxId}]
             }
         })
     }
