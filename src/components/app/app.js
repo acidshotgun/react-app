@@ -1,5 +1,6 @@
 // app.js сюда будут импортированы все компоненты и внутри с ними будут манипуляции
 import { Component } from 'react';
+import nextId from "react-id-generator";
 
 // Импорт блока AppInfo (помещаем) и остальных компонентов
 import AppInfo from '../app-info/app-info'
@@ -19,13 +20,12 @@ class App extends Component {
             // Иммитация базы данных
             // Она будет передана в кач-ве свойства в <EmployeesList/>
             data: [
-                {name: 'Alisa J', salary: 800, increase: false, id: 1},
-                {name: 'Tom W', salary: 800, increase: true, id: 2,},
-                {name: 'Mike W', salary: 3000, increase: false, id: 3},
-                {name: 'Aleksandr Z', salary: 5000, increase: true, id: 4},
+                {name: 'Alisa J', salary: 800, increase: false, id: nextId()},
+                {name: 'Tom W', salary: 800, increase: true, id: nextId()},
+                {name: 'Mike W', salary: 3000, increase: false, id: nextId()},
+                {name: 'Aleksandr Z', salary: 5000, increase: true, id: nextId()},
             ]
         }
-        this.maxId = 4;
     }
     
     // Метод удаления items из list он будет передаваться до самых items
@@ -49,10 +49,9 @@ class App extends Component {
     // Ф-я вызывается в формах и в кач-ве аргументов берет данные которые записан ф-й onValueChange при событии onChange
     // Ф-я будет вызыватся в формах ф-й submitValues()
     addItem = (newName, newSalary) => {
-        this.maxId++;
         this.setState(({data}) => {
             return {
-                data: [...data, {name: newName, salary: newSalary, increase: false, id: this.maxId}]
+                data: [...data, {name: newName, salary: newSalary, increase: false, id: nextId()}]
             }
         })
     }
