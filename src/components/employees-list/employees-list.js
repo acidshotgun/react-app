@@ -22,7 +22,7 @@ import './employees-list.css';
 //      2) Тк в пропсах все поступает как объект мы применяем деструктуризацию
 //      3) {data} - деструктуризация. Мы получаем массив data из объекта и с ним работаем
 // На его основании динамически формируются списки
-const EmployeesList = ({data, onDelete}) => {
+const EmployeesList = ({data, onDelete, onToggleIncrease, onToggleRise}) => {
 
     // Создаем переменную и внее будет помещен новый массив от data.map()
     // Массив содержит компонент EmployeesListItem с данными от перебираемого объекта (item) который лежит в массиве ()
@@ -47,7 +47,14 @@ const EmployeesList = ({data, onDelete}) => {
             // Id берем в этом компоненте. Из деструктуризированного объекта. Ф-я onDelete будет вызываться с этим id
             // Те когда создается item из метода map() он создается со своим id в key и плюс
             // Каждый item будет создан с методом onDelete(id) со своим собственным id
-            <EmployeesListItem key={id} {...itemProps} onDelete={() => onDelete(id)}/>
+
+            // По аналогии работют и методы onToggle()
+            <EmployeesListItem 
+                key={id} 
+                {...itemProps} 
+                onDelete={() => onDelete(id)}
+                onToggleIncrease={() => onToggleIncrease(id)}
+                onToggleRise={() => onToggleRise(id)}/>
         );
     })
 

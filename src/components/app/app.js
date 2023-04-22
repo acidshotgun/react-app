@@ -20,10 +20,10 @@ class App extends Component {
             // Иммитация базы данных
             // Она будет передана в кач-ве свойства в <EmployeesList/>
             data: [
-                {name: 'Alisa J', salary: 800, increase: false, id: nextId()},
-                {name: 'Tom W', salary: 800, increase: true, id: nextId()},
-                {name: 'Mike W', salary: 3000, increase: false, id: nextId()},
-                {name: 'Aleksandr Z', salary: 5000, increase: true, id: nextId()},
+                {name: 'Alisa J', salary: 800, increase: false, rise: true, id: nextId()},
+                {name: 'Tom W', salary: 800, increase: true, rise: false, id: nextId()},
+                {name: 'Mike W', salary: 3000, increase: false, rise: false, id: nextId()},
+                {name: 'Aleksandr Z', salary: 5000, increase: true, rise: false, id: nextId()},
             ]
         }
     }
@@ -53,9 +53,17 @@ class App extends Component {
     addItem = (newName, newSalary) => {
         this.setState(({data}) => {
             return {
-                data: [...data, {name: newName, salary: newSalary, increase: false, id: nextId()}]
+                data: [...data, {name: newName, salary: newSalary, increase: false, rise: false, id: nextId()}]
             }
         })
+    }
+
+    onToggleIncrease = (id) => {
+        console.log(`Increase this ${id}`);
+    }
+
+    onToggleRise = (id) => {
+        console.log(`Rise this ${id}`);
     }
 
     render() {
@@ -73,7 +81,11 @@ class App extends Component {
                 {/* В компоненты можно передавать что угодно поэтому передадим массив БД */}
                 {/* Теперь массив БД data можно использовать внутри компонента EmployeesList */}
                 {/* ВАЖНО ЧТО ЭТОТ МАССИВ СТАНЕТ ОБЪЕКТОМ и нужна будет деструктуризация */}
-                <EmployeesList data={this.state.data} onDelete={this.deleteItem}/>
+                <EmployeesList 
+                    data={this.state.data}
+                    onDelete={this.deleteItem}
+                    onToggleIncrease={this.onToggleIncrease}
+                    onToggleRise={this.onToggleRise}/>
                 <EmployessAddForm onAdd={this.addItem}/>
             </div>
         );
