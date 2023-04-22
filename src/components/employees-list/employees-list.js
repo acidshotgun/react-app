@@ -43,6 +43,10 @@ const EmployeesList = ({data, onDelete}) => {
             // Внутри <EmployeesListItem с ней уже работать.
             // Зададим ему так же св-во ф-ю onDelete()
             // Ведь у компонентов должны быть св-ва
+
+            // Id берем в этом компоненте. Из деструктуризированного объекта. Ф-я onDelete будет вызываться с этим id
+            // Те когда создается item из метода map() он создается со своим id в key и плюс
+            // Каждый item будет создан с методом onDelete(id) со своим собственным id
             <EmployeesListItem key={id} {...itemProps} onDelete={() => onDelete(id)}/>
         );
     })
