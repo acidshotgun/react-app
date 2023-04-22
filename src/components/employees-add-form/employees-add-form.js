@@ -4,7 +4,7 @@ import './employees-add-form.css';
 class EmployessAddForm extends Component {
     constructor(props) {
         super(props);
-        // Указываем состояния name и salary которые будут совпадать с атрибутом name="" в инпутах
+        // Указываем состояния name и salary которые будут совпадать с атрибутом value="" в инпутах
         // Так запись будет идти непосредственно в эти состояние, а не создавать другие
         this.state = {
             name: '',
@@ -20,8 +20,8 @@ class EmployessAddForm extends Component {
     onValueChange = (event) => {
         this.setState({
             // Такой синтаксис(ES6) [] позволяет записывать в состояния введенные зн-я ссылаясь на атрибут name у input
-            // Таким образом инпут name записывает значения в состояние name
-            // А инпут salary в состояние salary 
+            // Таким образом инпут name записывает значения в состояние name получаемое из value на одном объекте события
+            // А инпут name salary в состояние salary 
             [event.target.name]: event.target.value,
         })
     }
