@@ -28,11 +28,13 @@ class EmployessAddForm extends Component {
 
     submitValues = (event) => {
         event.preventDefault();
-        this.props.onAdd(this.state.name, this.state.salary)
-        this.setState({
-            name: '',
-            salary: '',
-        })
+        if (this.state.name.length >= 3 && Number(this.state.salary >= 1000)) {
+            this.props.onAdd(this.state.name, this.state.salary)
+            this.setState({
+                name: '',
+                salary: '',
+            })
+        }
     }
 
     render() {

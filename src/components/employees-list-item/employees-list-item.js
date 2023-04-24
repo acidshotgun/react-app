@@ -10,7 +10,7 @@ const EmployeesListItem = (props) => {
 
     // Достаем из переданных пропсов переменные
     // в т.ч. ф-ю удаления
-    const { name, salary, onDelete, onToggleIncrease, onToggleRise, increase, rise } = props;
+    const { name, salary, onDelete, onToggleProp, increase, rise } = props;
 
     // Структура будет формироваться исходя из переданных из БД свойств
     // Имя ЗП и премия
@@ -32,14 +32,15 @@ const EmployeesListItem = (props) => {
 
     return (
         <li className={classNames}>
-            <span onClick={onToggleRise} className="list-group-item-label">{name + '.'}</span>
+            <span onClick={onToggleProp} data-toggle="rise" className="list-group-item-label">{name + '.'}</span>
             <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
             <div className='d-flex justify-content-center align-items-center'>
 
                 {/* У кнопки будет слушатель что меняет премию */}
                 <button type="button"
                     className="btn-cookie btn-sm"
-                    onClick={onToggleIncrease}>
+                    data-toggle="increase"
+                    onClick={onToggleProp}>
                     <i className="fas fa-cookie"></i>
                 </button>
 
