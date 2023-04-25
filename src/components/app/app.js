@@ -24,7 +24,11 @@ class App extends Component {
                 {name: 'Tom W', salary: 1000, increase: true, rise: false, id: nextId()},
                 {name: 'Mike W', salary: 3000, increase: false, rise: false, id: nextId()},
                 {name: 'Aleksandr Z', salary: 5000, increase: false, rise: false, id: nextId()},
-            ]
+            ],
+            // Храним введенное в поиске зн-е. Это состояние
+            term: '',
+            // По filter будем ореинтироваться какая вкладка фильтра будет активна
+            filter: 'all',
         }
     }
 
@@ -87,6 +91,7 @@ class App extends Component {
     // Так возвращается массив объектов но с одним новым измененным зн-м
 
     // Второй аргумент prop получается при вызове ф-и и зависит от data атрибута выбранного элемента
+    // Синтаксис [prop] позваляет вытащить зн-е из data-атрибута который передавется
     onToggleProp = (id, prop) => {
         this.setState(({data}) => ({
             data: data.map(item => {
@@ -98,10 +103,60 @@ class App extends Component {
         }))
     }
 
+    // Ф-я фильтра. items это данные которые филтруем а term это то по чему фильтруем
+    searchEmp = (items, term) => {
+        if (items.length === 0) {
+            return items;
+        }
+
+        // Возврат отфильрованного списка name которых совпали с результатом методода indexOf(term)
+        // Метод ище подстроки(совпадения) и выдает -1 если не нашлось
+        // Это условие вернут массив элементов которые подходят под условия поиска
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1;
+        })
+    }
+
+    // Метод отвечает за установку состояния term внутри этого главного компонента
+    // Принимать term будет из search-panel
+    onUpdateSearch = (term) => {
+        this.setState({term: term})
+    }
+
+    // Метод фильтрации списка принимает массив и сам фильтр
+    // switch case фильтрует массив в зависимости от приходящего в аргумент filter 
+    // Этот метод вызывается вместе с searchEmp - visibleData = this.filterPost(this.searchEmp(data, term), filter)
+    // Те этот метод фильтрует уже отфилтьрованный по сотрудникам список и выдыет уже список по фильтрам
+    
+    filterPost = (items, filter) => {
+        switch (filter) {
+            case 'rise':
+                return items.filter(item => item.rise);
+            case 'moreThen1000':
+                return items.filter(item => item.salary > 1000);
+            default:
+                return items;
+        }
+    }
+
+    // Метод будет запускаться в app-filter и менять состояние filter
+    onFilterSelect = (filter) => {
+        this.setState({filter});
+    }
+
     render() {
+        const { data, term, filter } = this.state;
+
         // Переменные для хранения штата и сотрудников с премиями
         const employees = this.state.data.length;
         const increased = this.state.data.filter(item => item.increase).length
+
+        // Отфильтрованные данные(массив) которые будут показываться в employees-list
+        // Если строка ввода (term) будет пустая то выводится весь списко
+        // Иначе отфильтрованные зн-я. Ее передаем уже в employees-list
+
+        // Конечные данные проходят двойную ф-ю (по поиску и по фильтрам)
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter);
 
         return (
             <div className="app">
@@ -113,15 +168,15 @@ class App extends Component {
                 {/* Блок с двумя компонентами. Поиск и фильтры. */}
                 {/* Два компонента с разным функционалом которые будут содержаться внутри*/}
                 <div className='search-panel'>
-                    <SearchPanel />
-                    <AppFilter />
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
+                    <AppFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
                 </div>
     
                 {/* В компоненты можно передавать что угодно поэтому передадим массив БД */}
                 {/* Теперь массив БД data можно использовать внутри компонента EmployeesList */}
                 {/* ВАЖНО ЧТО ЭТОТ МАССИВ СТАНЕТ ОБЪЕКТОМ и нужна будет деструктуризация */}
                 <EmployeesList 
-                    data={this.state.data}
+                    data={visibleData}
                     onDelete={this.deleteItem}
                     onToggleProp={this.onToggleProp}
                 />
